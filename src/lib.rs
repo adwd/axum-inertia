@@ -228,8 +228,11 @@ mod tests {
             i.render("foo!", json!({"bar": "baz"}))
         }
 
-        let layout =
-            Box::new(|props| format!(r#"<html><body><div id="app" data-page='{props}'></div>"#));
+        let layout = Box::new(|props| {
+            format!(
+                r#"<html><body><script data-page="app" type="application/json">{props}</script><div id="app"></div>"#
+            )
+        });
 
         let config = InertiaConfig::new(Some("123".to_string()), layout);
 
@@ -264,8 +267,11 @@ mod tests {
             i.render("foo!", json!({"bar": "baz"}))
         }
 
-        let layout =
-            Box::new(|props| format!(r#"<html><body><div id="app" data-page='{props}'></div>"#));
+        let layout = Box::new(|props| {
+            format!(
+                r#"<html><body><script data-page="app" type="application/json">{props}</script><div id="app"></div>"#
+            )
+        });
 
         let inertia = InertiaConfig::new(Some("123".to_string()), layout);
 

@@ -34,6 +34,10 @@ use serde::Deserialize;
 use sha1::{Digest, Sha1};
 use std::collections::HashMap;
 
+fn escape_page_json(page: String) -> String {
+    page.replace('<', "\\u003c")
+}
+
 pub struct Development {
     base: &'static str,
     port: u16,
@@ -138,7 +142,10 @@ impl Development {
                     }
 
                     body {
-                        div #app data-page=(props) {}
+                        script data-page="app" type="application/json" {
+                            (PreEscaped(escape_page_json(props)))
+                        }
+                        div #app {}
                     }
                 }
             }
@@ -244,7 +251,10 @@ impl Production {
                         (PreEscaped(css))
                     }
                     body {
-                        div #app data-page=(props) {}
+                        script data-page="app" type="application/json" {
+                            (PreEscaped(escape_page_json(props)))
+                        }
+                        div #app {}
                     }
                 }
             }
@@ -355,7 +365,11 @@ mod tests {
         assert!(rendered_layout.contains(r#"<!DOCTYPE html>"#));
         assert!(rendered_layout.contains(r#"<html lang="lang-id">"#));
         assert!(rendered_layout.contains(r#"<title>app-title-here</title>"#));
-        assert!(rendered_layout.contains(r#"{&quot;someprops&quot;: &quot;somevalues&quot;}"#));
+        assert!(rendered_layout.contains(
+            r#"<script data-page="app" type="application/json">{"someprops": "somevalues"}</script>"#
+        ));
+        assert!(rendered_layout.contains(r#"<div id="app"></div>"#));
+        assert!(!rendered_layout.contains("data-page=\"{&quot;"));
         assert!(rendered_layout.contains(r#"http://localhost:8080/app/@vite/client"#));
         assert!(
             rendered_layout.contains(r#"window.__vite_plugin_react_preamble_installed__ = true"#)
@@ -422,7 +436,10 @@ mod tests {
         assert!(rendered_layout.contains(r#"<link rel="stylesheet" href="/style.css"/>"#));
         assert!(rendered_layout.contains(r#"<html lang="jv">"#));
         assert!(rendered_layout.contains(r#"<title>Untitled Axum Inertia App</title>"#));
-        assert!(rendered_layout.contains(r#"{&quot;someprops&quot;: &quot;somevalues&quot;}"#));
+        assert!(rendered_layout.contains(
+            r#"<script data-page="app" type="application/json">{"someprops": "somevalues"}</script>"#
+        ));
+        assert!(rendered_layout.contains(r#"<div id="app"></div>"#));
     }
 
     #[test]
@@ -442,6 +459,21 @@ mod tests {
         assert!(rendered_layout.contains(r#"<link rel="stylesheet" href="/style.css"/>"#));
         assert!(rendered_layout.contains(r#"<html lang="jv">"#));
         assert!(rendered_layout.contains(r#"<title>Untitled Axum Inertia App</title>"#));
-        assert!(rendered_layout.contains(r#"{&quot;someprops&quot;: &quot;somevalues&quot;}"#));
+        assert!(rendered_layout.contains(
+            r#"<script data-page="app" type="application/json">{"someprops": "somevalues"}</script>"#
+        ));
+        assert!(rendered_layout.contains(r#"<div id="app"></div>"#));
+    }
+
+    #[test]
+    fn test_page_json_cannot_close_its_script_element() {
+        let config = Development::default().into_config();
+        let rendered_layout = (config.layout())(
+            r#"{"content":"</script><script>alert('xss')</script>"}"#.to_string(),
+        );
+
+        assert!(!rendered_layout.contains("</script><script>alert"));
+        assert!(rendered_layout
+            .contains(r#"{"content":"\u003c/script>\u003cscript>alert('xss')\u003c/script>"}"#));
     }
 }

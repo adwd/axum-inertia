@@ -3,8 +3,8 @@ use serde_json::Value;
 
 /// Holds data for the Inertia page object.
 ///
-/// Serializes to json. Included in the `data-page` attribute of the
-/// initial html page, or sent as the payload for Inertia requests.
+/// Serializes to JSON. Included in the `script[data-page]` element of
+/// the initial HTML page, or sent as the payload for Inertia requests.
 ///
 /// More info at: https://inertiajs.com/the-protocol#the-page-object
 #[derive(Serialize)]

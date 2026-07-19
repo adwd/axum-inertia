@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@inertiajs/react": "^2.3.27",
+    "@inertiajs/react": "^3.6.1",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },

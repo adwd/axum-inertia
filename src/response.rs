@@ -57,7 +57,8 @@ mod tests {
             <title>Foo!</title>
             </head>
             <body>
-                <div id="app" data-page='{}'></div>
+                <script data-page="app" type="application/json">{}</script>
+                <div id="app"></div>
             </body>
             </html>
         "#, props}

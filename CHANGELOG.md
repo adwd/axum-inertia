@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add a complete Todo application example using React and Vite.
+
 ## [0.9.0] 2025-07-25
 
 `axum-inertia` will now include a `Vary` header to fix issues with browsers

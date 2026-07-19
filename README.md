@@ -16,6 +16,12 @@ async fn get_posts(i: Inertia) -> impl IntoResponse {
 
 See [crate documentation] for more information.
 
+## Example
+
+The [`todo` example](examples/todo) is a complete Axum, Inertia, React, and
+Vite application. Its README includes instructions for development and
+production builds.
+
 [inertia.js]: https://inertiajs.com
 [crate documentation]: https://docs.rs/axum-inertia/latest/axum_inertia/
 

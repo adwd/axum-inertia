@@ -28,15 +28,12 @@
 //!
 //! [vitejs]: https://vitejs.dev
 use crate::config::InertiaConfig;
+use crate::response::escape_page_json;
 use hex::encode;
 use maud::{DOCTYPE, PreEscaped, html};
 use serde::Deserialize;
 use sha1::{Digest, Sha1};
 use std::collections::HashMap;
-
-fn escape_page_json(page: String) -> String {
-    page.replace('<', "\\u003c")
-}
 
 pub struct Development {
     base: &'static str,

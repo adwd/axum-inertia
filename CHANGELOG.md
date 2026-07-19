@@ -13,6 +13,12 @@
 - Update Rust dependencies and the Todo example's frontend dependencies.
 - Pin the development toolchain to Rust 1.97.1, set the minimum supported Rust version to 1.85, and move the library and Todo example to Rust 2024 edition.
 
+### Fixed
+
+- Escape initial page JSON for custom layouts to prevent script element injection.
+- Include `Vary: X-Inertia` on both HTML and JSON responses.
+- Return an internal server error instead of panicking when props serialization fails.
+
 ## [0.9.0] 2025-07-25
 
 `axum-inertia` will now include a `Vary` header to fix issues with browsers

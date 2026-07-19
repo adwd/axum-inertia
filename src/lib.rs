@@ -193,18 +193,21 @@ impl Inertia {
     }
 
     /// Renders an Inertia response.
+    ///
+    /// If the props cannot be serialized, the response has a `500 Internal
+    /// Server Error` status.
     pub fn render<S: Props>(self, component: &str, props: S) -> Response<'_> {
         let request = self.request;
         let url = request.url.clone();
-        let page = Page {
-            component,
-            props: props
-                .serialize(request.partial.as_ref())
-                // TODO: error handling
-                .expect("serialization failure"),
-            url,
-            version: self.config.version().clone(),
-        };
+        let page = props
+            .serialize(request.partial.as_ref())
+            .map(|props| Page {
+                component,
+                props,
+                url,
+                version: self.config.version(),
+            })
+            .map_err(|_| ());
 
         Response {
             page,
@@ -219,8 +222,27 @@ mod tests {
     use super::*;
     use axum::{self, Router, response::IntoResponse, routing::get};
     use reqwest::StatusCode;
-    use serde_json::json;
+    use serde_json::{Value, json};
+    use std::error::Error;
     use tokio::net::TcpListener;
+
+    struct FailingProps;
+
+    impl Props for FailingProps {
+        fn serialize(self, _: Option<&partial::Partial>) -> Result<Value, impl Error> {
+            Err(std::io::Error::other("serialization failure"))
+        }
+    }
+
+    #[test]
+    fn it_returns_internal_server_error_when_props_serialization_fails() {
+        let config = InertiaConfig::new(None, Box::new(|_| String::new()));
+        let response = Inertia::new(Request::test_request(), config)
+            .render("Testing", FailingProps)
+            .into_response();
+
+        assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
+    }
 
     #[tokio::test]
     async fn it_works() {

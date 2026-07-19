@@ -1,10 +1,9 @@
-[![Crates.io](https://img.shields.io/crates/v/axum-inertia.svg)](https://crates.io/crates/axum-inertia)
-[![Documentation](https://docs.rs/axum-inertia/badge.svg)](https://docs.rs/axum-inertia/)
-
 axum-inertia
 ============
 
 Implementation of the [inertia.js] protocol for axum.
+
+This repository is a fork of [mjhoy/axum-inertia].
 
 Provides an `Inertia` axum extractor to render responses like so:
 
@@ -23,6 +22,7 @@ Vite application. Its README includes instructions for development and
 production builds.
 
 [inertia.js]: https://inertiajs.com
+[mjhoy/axum-inertia]: https://github.com/mjhoy/axum-inertia
 [crate documentation]: https://docs.rs/axum-inertia/latest/axum_inertia/
 
 ## Making a new release

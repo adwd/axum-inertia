@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Added
+
+- Add a complete Todo application example using React and Vite.
+
+### Changed
+
+- Support Inertia.js v3 by rendering initial page data in an application JSON script in the Vite layouts.
+- Update the Todo example's Inertia React dependency.
+
 ## [0.9.0] 2025-07-25
 
 `axum-inertia` will now include a `Vary` header to fix issues with browsers

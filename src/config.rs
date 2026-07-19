@@ -15,9 +15,11 @@ pub struct InertiaConfig {
 impl InertiaConfig {
     /// Constructs a new InertiaConfig object.
     ///
-    /// `layout` provides information about how to render the initial
-    /// page load. See the [crate::vite] module for an implementation
-    /// of this for vite.
+    /// `layout` receives the JSON-encoded page object and renders the
+    /// initial page load. The page JSON belongs in a
+    /// `<script data-page="app" type="application/json">` element,
+    /// with a separate `<div id="app"></div>` mount point. See the
+    /// [crate::vite] module for a Vite implementation.
     pub fn new(version: Option<String>, layout: LayoutResolver) -> InertiaConfig {
         let inner = Inner { version, layout };
         InertiaConfig {

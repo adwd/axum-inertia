@@ -1,27 +1,27 @@
 [package]
 name = "axum-inertia"
 version = "0.9.0"
-edition = "2021"
+edition = "2024"
 authors = ["Mikey Hoy <mjh@mjhoy.com>"]
 license = "MIT OR Apache-2.0"
 description = "An implementation of the Inertia.js protocol for Axum"
 repository = "https://github.com/mjhoy/axum-inertia"
 keywords = ["axum", "inertia"]
-rust-version = "1.75"
+rust-version = "1.85"
 
 [dependencies]
-axum = "0.8.1"
-http = "1.0.0"
-hyper = "1.0.1"
-serde = { version = "1.0.189", features = ["derive"] }
-serde_json = "1.0.107"
-indoc = "2.0.4"
-sha1 = "0.10.6"
+axum = "0.8.9"
+http = "1.4.2"
+hyper = "1.10.1"
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.150"
+indoc = "2.0.7"
+sha1 = "0.11.0"
 hex = "0.4.3"
 maud = "0.27.0"
 
 [dev-dependencies]
-reqwest = "0.12.14"
-tokio = { version = "1.34.0", features = ["full"] }
-tower-http = { version = "0.6.6", features = ["set-header", "trace"] }
-http-body-util = "0.1.0"
+reqwest = "0.13.4"
+tokio = { version = "1.53.0", features = ["full"] }
+tower-http = { version = "0.7.0", features = ["set-header", "trace"] }
+http-body-util = "0.1.4"

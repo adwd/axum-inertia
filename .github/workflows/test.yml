@@ -8,12 +8,29 @@ concurrency:
   cancel-in-progress: true
 name: test
 jobs:
+  msrv:
+    runs-on: ubuntu-latest
+    name: ubuntu / 1.85 / msrv
+    env:
+      RUSTUP_TOOLCHAIN: 1.85.0
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          submodules: true
+      - name: Install Rust 1.85
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.85.0
+      - name: cargo check --lib
+        run: cargo check --locked --lib
   required:
     runs-on: ubuntu-latest
     name: ubuntu / ${{ matrix.toolchain }}
     strategy:
       matrix:
         toolchain: [stable, beta]
+    env:
+      RUSTUP_TOOLCHAIN: ${{ matrix.toolchain }}
     steps:
       - uses: actions/checkout@v7
         with:

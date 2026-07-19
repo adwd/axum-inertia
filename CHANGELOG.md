@@ -10,6 +10,8 @@
 
 - Support Inertia.js v3 by rendering initial page data in an application JSON script in the Vite layouts.
 - Update the Todo example's Inertia React dependency.
+- Update Rust dependencies and the Todo example's frontend dependencies.
+- Pin the development toolchain to Rust 1.97.1, set the minimum supported Rust version to 1.85, and move the library and Todo example to Rust 2024 edition.
 
 ## [0.9.0] 2025-07-25
 

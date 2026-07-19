@@ -1,15 +1,16 @@
 [package]
 name = "todo"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
+rust-version = "1.85"
 publish = false
 
 [dependencies]
 axum = "0.8.9"
 axum-inertia = { path = "../.." }
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
-tokio = { version = "1.49", features = ["macros", "rt-multi-thread", "net", "sync", "signal"] }
-tower-http = { version = "0.6", features = ["fs", "trace"] }
-tracing = "0.1"
-tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+serde = { version = "1.0.229", features = ["derive"] }
+serde_json = "1.0.150"
+tokio = { version = "1.53.0", features = ["macros", "rt-multi-thread", "net", "sync", "signal"] }
+tower-http = { version = "0.7.0", features = ["fs", "trace"] }
+tracing = "0.1.44"
+tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }

@@ -13,7 +13,7 @@ This repository is a single Rust library crate implementing the Inertia.js proto
 - `cargo clippy --all-targets --all-features` runs the CI lints. Treat warnings as failures (`RUSTFLAGS="-Dwarnings"`).
 - `cargo doc --open` builds and opens the crate documentation locally.
 
-The crate targets Rust 1.75 or newer and edition 2021. Before submitting, run formatting, Clippy, and both test commands.
+The crate targets Rust 1.85 or newer and edition 2024. Before submitting, run formatting, Clippy, and both test commands.
 
 ## Coding Style & Naming Conventions
 

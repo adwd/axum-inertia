@@ -9,6 +9,8 @@ jobs:
   fmt:
     runs-on: ubuntu-latest
     name: stable / fmt
+    env:
+      RUSTUP_TOOLCHAIN: stable
     steps:
       - uses: actions/checkout@v7
         with:
@@ -31,6 +33,8 @@ jobs:
       fail-fast: false
       matrix:
         toolchain: [stable, beta]
+    env:
+      RUSTUP_TOOLCHAIN: ${{ matrix.toolchain }}
     steps:
       - uses: actions/checkout@v7
       - name: Run Clippy

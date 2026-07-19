@@ -29,7 +29,7 @@
 //! [vitejs]: https://vitejs.dev
 use crate::config::InertiaConfig;
 use hex::encode;
-use maud::{html, PreEscaped, DOCTYPE};
+use maud::{DOCTYPE, PreEscaped, html};
 use serde::Deserialize;
 use sha1::{Digest, Sha1};
 use std::collections::HashMap;
@@ -431,8 +431,10 @@ mod tests {
         let rendered_layout = binding.as_str();
 
         assert!(rendered_layout.contains(r#"<!DOCTYPE html>"#));
-        assert!(rendered_layout
-            .contains(r#"<script type="module" src="/main.hash-id-here.js"></script>"#));
+        assert!(
+            rendered_layout
+                .contains(r#"<script type="module" src="/main.hash-id-here.js"></script>"#)
+        );
         assert!(rendered_layout.contains(r#"<link rel="stylesheet" href="/style.css"/>"#));
         assert!(rendered_layout.contains(r#"<html lang="jv">"#));
         assert!(rendered_layout.contains(r#"<title>Untitled Axum Inertia App</title>"#));
@@ -473,7 +475,9 @@ mod tests {
         );
 
         assert!(!rendered_layout.contains("</script><script>alert"));
-        assert!(rendered_layout
-            .contains(r#"{"content":"\u003c/script>\u003cscript>alert('xss')\u003c/script>"}"#));
+        assert!(
+            rendered_layout
+                .contains(r#"{"content":"\u003c/script>\u003cscript>alert('xss')\u003c/script>"}"#)
+        );
     }
 }

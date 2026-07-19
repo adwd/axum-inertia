@@ -1,19 +1,19 @@
 use std::{
     env,
     sync::{
-        atomic::{AtomicU64, Ordering},
         Arc,
+        atomic::{AtomicU64, Ordering},
     },
 };
 
 use axum::{
+    Json, Router,
     extract::{FromRef, Path, Query, State},
     http::StatusCode,
     response::{IntoResponse, Redirect, Response},
     routing::{delete, get, patch, post},
-    Json, Router,
 };
-use axum_inertia::{vite, Inertia, InertiaConfig};
+use axum_inertia::{Inertia, InertiaConfig, vite};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 use tokio::sync::RwLock;

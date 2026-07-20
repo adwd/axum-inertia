@@ -1,45 +1,56 @@
+name: ci
+
 on:
   push:
-    branches: [main]
-  pull_request:
-# Stop CI if a commit is pushed.
+    branches:
+      - "**"
+
 concurrency:
-  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
-name: test
+
 jobs:
-  msrv:
+  fmt:
+    name: stable / fmt
     runs-on: ubuntu-latest
-    name: ubuntu / 1.85 / msrv
-    env:
-      RUSTUP_TOOLCHAIN: 1.85.0
     steps:
       - uses: actions/checkout@v7
+      - name: Install stable with rustfmt
+        uses: dtolnay/rust-toolchain@stable
         with:
-          submodules: true
+          components: rustfmt
+      - name: cargo fmt --check
+        run: cargo fmt --check
+
+  msrv:
+    name: 1.85 / check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
       - name: Install Rust 1.85
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: 1.85.0
       - name: cargo check --lib
         run: cargo check --locked --lib
-  required:
+
+  test:
+    name: ${{ matrix.toolchain }} / clippy and test
     runs-on: ubuntu-latest
-    name: ubuntu / ${{ matrix.toolchain }}
     strategy:
+      fail-fast: false
       matrix:
         toolchain: [stable, beta]
-    env:
-      RUSTUP_TOOLCHAIN: ${{ matrix.toolchain }}
     steps:
       - uses: actions/checkout@v7
-        with:
-          submodules: true
       - name: Install ${{ matrix.toolchain }}
         uses: dtolnay/rust-toolchain@master
         with:
           toolchain: ${{ matrix.toolchain }}
-      - name: cargo test --locked
+          components: clippy
+      - name: cargo clippy
+        run: cargo clippy --all-targets --all-features -- -D warnings
+      - name: cargo test
         run: cargo test --locked --all-features --all-targets
       - name: cargo test --doc
         run: cargo test --locked --all-features --doc

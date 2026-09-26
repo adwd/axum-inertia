@@ -13,4 +13,8 @@ pub(crate) struct Page<'a> {
     pub(crate) props: Value,
     pub(crate) url: String,
     pub(crate) version: Option<String>,
+    /// Inertia v3 flash data: one-time values (e.g. toast messages) that
+    /// are exposed as `page.flash` and are not persisted in history.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub(crate) flash: Option<Value>,
 }

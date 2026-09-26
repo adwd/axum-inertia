@@ -5,6 +5,7 @@
 ### Added
 
 - Add a complete Todo application example using React and Vite.
+- Add `Response::flash` to send Inertia v3 flash data as the page object's top-level `flash` field.
 
 ### Changed
 

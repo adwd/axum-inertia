@@ -206,6 +206,7 @@ impl Inertia {
                 props,
                 url,
                 version: self.config.version(),
+                flash: None,
             })
             .map_err(|_| ());
 
